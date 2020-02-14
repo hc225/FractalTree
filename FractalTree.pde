@@ -2,24 +2,20 @@ private double fractionLength = .8;
 private int smallestBranch = 25; 
 private double branchAngle = 0.6;
 private int y1 = 440;
-private int branchLen = 5;
-private boolean shrink = false;
+private int branchLen = 45;
+private boolean treeGrowth = true;
 public void setup() 
 {   
 	size(640,480);    
-	 
 } 
 public void draw() 
 {   
-	background(0);   
+	background(0);
 	strokeWeight(2);
 	line(320,480,320,getY1());
 	strokeWeight(1);
 	drawBranches(320,getY1(),getBranchLen(),3*Math.PI/2); 
-	if(getY1() > 365) setY1(getY1()-1); 
-	if(getBranchLen() < 115) setBranchLen(getBranchLen()+1);
-	if(getY1() == 365) setY1(440); 
-	if(getBranchLen() == 115) setBranchLen(5);
+	growTree();
 }
 public void drawBranches(int x,int y, double branchLength, double angle) 
 {   
@@ -44,14 +40,27 @@ public void drawBranches(int x,int y, double branchLength, double angle)
 		drawBranches(endX3,endY3,branchLength,angle3);
 	}
 } 
+public void growTree()
+{
+	if(getTreeGrowth() == false)
+	{
+		if(getY1() < 440) setY1(getY1()+1); 
+		if(getBranchLen() > 45) setBranchLen(getBranchLen()-1); 
+	}
+	if(getTreeGrowth() == true)
+	{
+		if(getY1() > 365) setY1(getY1()-1); 
+		if(getBranchLen() < 115) setBranchLen(getBranchLen()+1); 
+	}
+}
 public void mousePressed()
 {
-	setY1(440);
+	setTreeGrowth(!getTreeGrowth());
 
 }
 public int getY1(){return y1;}
 public void setY1(int y){y1 = y;}
 public int getBranchLen(){return branchLen;}
 public void setBranchLen(int len){branchLen = len;}
-public boolean getShrink(){return shrink;}
-public void setShrink(boolean s){shrink = s;}
+public void setTreeGrowth(boolean g){treeGrowth = g;}
+public boolean getTreeGrowth(){return treeGrowth;}
